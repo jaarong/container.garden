@@ -1,39 +1,45 @@
 // @flow strict
 import React from 'react';
-import { Link } from 'gatsby';
 import Author from './Author';
 import Comments from './Comments';
 import Content from './Content';
 import Meta from './Meta';
 import Tags from './Tags';
-import styles from './Post.module.scss';
 import type { Node } from '../../types';
+import scrollTo from 'gatsby-plugin-smoothscroll';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
 
 type Props = {
-  post: Node
+  post: Node,
+  containerCss: string
 };
 
 const Post = ({ post }: Props) => {
   const { html } = post;
   const { tagSlugs, slug } = post.fields;
-  const { tags, title, date } = post.frontmatter;
+  const { tags, title, date, featuredImage } = post.frontmatter;
 
   return (
-    <div className={styles['post']}>
-      <Link className={styles['post__home-button']} to="/">All Articles</Link>
+    <div className="post-start">
 
-      <div className={styles['post__content']}>
-        <Content body={html} title={title} />
+      <div className="">
+        <Content body={html} title={title} banner={featuredImage} />
       </div>
 
-      <div className={styles['post__footer']}>
+      <div className={containerCss}>
         <Meta date={date} />
-        {tags && tagSlugs && <Tags tags={tags} tagSlugs={tagSlugs} />}
+        {tags && tagSlugs && <Tags className="border border-white text-lg rounded-lg p-3 my-4" tags={tags} tagSlugs={tagSlugs} />}
         <Author />
       </div>
 
-      <div className={styles['post__comments']}>
+      <div className={containerCss}>
         <Comments postSlug={slug} postTitle={post.frontmatter.title} />
+      </div>
+      <div className={containerCss}>
+        <div className="text-center">
+          <button title="Back to top" className="border border-white text-lg rounded-lg p-3" onClick={() => scrollTo('#topofpage')}><FontAwesomeIcon icon={ faChevronUp } />&nbsp;&nbsp;To The Top </button>
+        </div>
       </div>
     </div>
   );

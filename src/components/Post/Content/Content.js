@@ -1,16 +1,17 @@
 // @flow strict
 import React from 'react';
-import styles from './Content.module.scss';
 
 type Props = {
   body: string,
-  title: string
+  title: string,
+  banner: string
 };
 
-const Content = ({ body, title }: Props) => (
-  <div className={styles['content']}>
-    <h1 className={styles['content__title']}>{title}</h1>
-    <div className={styles['content__body']} dangerouslySetInnerHTML={{ __html: body }} />
+const Content = ({ body, title, banner }: Props) => (
+  <div className="">
+    <img class="my-6" src={banner} />
+    <h1 className="text-5xl">{title}</h1>
+      <div className="markdown" dangerouslySetInnerHTML={{ __html: body }} />
   </div>
 );
 

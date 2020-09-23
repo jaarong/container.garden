@@ -12,7 +12,9 @@ module.exports = {
     copyright: siteConfig.copyright,
     disqusShortname: siteConfig.disqusShortname,
     menu: siteConfig.menu,
-    author: siteConfig.author
+    author: siteConfig.author,
+    contacts: siteConfig.contacts,
+    logo: siteConfig.logo
   },
   plugins: [
     {
@@ -87,6 +89,11 @@ module.exports = {
                         template
                         draft
                         description
+                        featuredImage {
+                          alt
+                          src
+                          title
+                        }
                       }
                     }
                   }
@@ -138,13 +145,37 @@ module.exports = {
         modulePath: `${__dirname}/src/cms/index.js`,
       }
     },
-    {
+/*     {
       resolve: 'gatsby-plugin-google-gtag',
       options: {
         trackingIds: [siteConfig.googleAnalyticsId],
         pluginConfig: {
           head: true,
         },
+        
+      },
+    }, */
+    {
+      resolve: "gatsby-plugin-google-tagmanager",
+      options: {
+        id: "GTM-T2HBQGS",
+  
+        // Include GTM in development.
+        //
+        // Defaults to false meaning GTM will only be loaded in production.
+        includeInDevelopment: true,
+  
+        // datalayer to be set before GTM is loaded
+        // should be an object or a function that is executed in the browser
+        //
+        // Defaults to null
+        defaultDataLayer: { platform: "gatsby" },
+  
+        // Name of the event that is triggered
+        // on every Gatsby route change.
+        //
+        // Defaults to gatsby-route-change
+        routeChangeEventName: "gatsby-route-change",
       },
     },
     {
@@ -190,19 +221,45 @@ module.exports = {
         icon: 'static/photo.jpg'
       },
     },
+    {
+      resolve: `gatsby-plugin-nprogress`,
+      options: {
+        // Setting a color is optional.
+        color: `#A1C181`,
+        // Disable the loading spinner.
+        showSpinner: false,
+      },
+    },
     'gatsby-plugin-offline',
     'gatsby-plugin-catch-links',
     'gatsby-plugin-react-helmet',
-    {
-      resolve: 'gatsby-plugin-sass',
-      options: {
-        postCssPlugins: [...postCssPlugins],
-        cssLoaderOptions: {
-          camelCase: false,
-        }
-      }
-    },
+    'gatsby-plugin-postcss',
     'gatsby-plugin-flow',
     'gatsby-plugin-optimize-svgs',
+    `gatsby-plugin-smoothscroll`,
+    {
+      resolve: 'gatsby-plugin-next-seo',
+      options: {
+        openGraph: {
+          type: 'website',
+          locale: 'en_IE',
+          url: 'https://www.container.garden',
+          site_name: 'Container.Garden',
+        },
+        twitter: {
+          handle: '@ContainerGreens',
+          site: '@ContainerGreens',
+          cardType: 'summary_large_image',
+        },
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-web-font-loader',
+      options: {
+        google: {
+          families: ['Lato']
+        }
+      }
+    }, 
   ]
 };
