@@ -79,11 +79,7 @@ export const query = graphql`
             date
             category
             description
-            featuredImage {
-              alt
-              src
-              title
-            }
+
           }
         }
       }
