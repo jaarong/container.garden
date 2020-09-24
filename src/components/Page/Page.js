@@ -1,12 +1,12 @@
 import React, { useRef, useEffect } from 'react';
+import styles from './Page.module.scss';
 
 type Props = {
-  header?: string,
-  children: React.Node,
-  containerCss: string
+  title?: string,
+  children: React.Node
 };
 
-const Page = ({ header, children, containerCss }: Props) => {
+const Page = ({ title, children }: Props) => {
   const pageRef = useRef();
 
   useEffect(() => {
@@ -14,10 +14,10 @@ const Page = ({ header, children, containerCss }: Props) => {
   });
 
   return (
-    <div ref={pageRef}>
-      <div className={containerCss}>
-        { header && <h1 className="text-3xl">{header}</h1>}
-        <div className="mt-4">
+    <div ref={pageRef} className={styles['page']}>
+      <div className={styles['page__inner']}>
+        { title && <h1 className={styles['page__title']}>{title}</h1>}
+        <div className={styles['page__body']}>
           {children}
         </div>
       </div>

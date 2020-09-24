@@ -17,17 +17,11 @@ const PostTemplate = ({ data }: Props) => {
   const { frontmatter } = data.markdownRemark;
   const { title: postTitle, description: postDescription, socialImage } = frontmatter;
   const metaDescription = postDescription !== null ? postDescription : siteSubtitle;
-  const featureImage = featuredImage != null ? featuredImage : logo;
-  const containerCss = "container mx-auto p-6 max-w-screen-md";
-  const canonicalUrl = url + "/" + data.mdx.slug;
-  const title = `${pageTitle} - ${siteTitle}`;
+  const socialImageUrl = typeof socialImage !== 'undefined' ? socialImage['publicURL'] : undefined;
+
   return (
-    <Layout title={`${postTitle} - ${siteTitle}`} description={metaDescription} socialImage={socialImage} >
-      <div className="m-3 max-w-screen-md mx-auto">
-        <div className="container mx-auto p-6 max-w-screen-md">
-          <Post post={data.markdownRemark} />
-        </div>
-      </div>
+    <Layout title={`${postTitle} - ${siteTitle}`} description={metaDescription} socialImage={socialImageUrl} >
+      <Post post={data.markdownRemark} />
     </Layout>
   );
 };
@@ -46,10 +40,8 @@ export const query = graphql`
         description
         tags
         title
-        featuredImage {
-          alt
-          src
-          title
+        socialImage {
+          publicURL
         }
       }
     }
